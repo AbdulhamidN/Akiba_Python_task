@@ -1,0 +1,20 @@
+customer = input("Enter customer name: ")
+product = input("Enter product name: ")
+price = float(input("Enter price: "))
+quantity = int(input("Enter quantity: "))
+
+total = price * quantity
+
+print("========================================")
+print("              RECEIPT")
+print("========================================")
+print("Customer:", customer)
+print()
+print("Product       Price       Qty")
+print("----------------------------------------")
+print(product, "      ", price, "ETB      ", quantity)
+print()
+print("Total:", total, "ETB")
+print()
+print("Thank you for shopping!")
+print("========================================")
