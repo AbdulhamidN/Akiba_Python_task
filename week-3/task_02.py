@@ -19,33 +19,33 @@ def calculate_grade(score):
 
 
 def calculate_average(students):
+    if len(students) == 0:
+        return 0
+
     total = 0
 
     for student in students:
-        total = total + student["score"]
-
-    if len(students) == 0:
-        return 0
+        total = total + student[1]
 
     return total / len(students)
 
 
 def find_highest_score(students):
-    highest = students[0]["score"]
+    highest = students[0][1]
 
     for student in students:
-        if student["score"] > highest:
-            highest = student["score"]
+        if student[1] > highest:
+            highest = student[1]
 
     return highest
 
 
 def find_lowest_score(students):
-    lowest = students[0]["score"]
+    lowest = students[0][1]
 
     for student in students:
-        if student["score"] < lowest:
-            lowest = student["score"]
+        if student[1] < lowest:
+            lowest = student[1]
 
     return lowest
 
@@ -54,7 +54,7 @@ def count_passed(students):
     passed = 0
 
     for student in students:
-        if student["score"] >= 50:
+        if student[1] >= 50:
             passed = passed + 1
 
     return passed
@@ -64,7 +64,7 @@ def count_failed(students):
     failed = 0
 
     for student in students:
-        if student["score"] < 50:
+        if student[1] < 50:
             failed = failed + 1
 
     return failed
@@ -74,7 +74,7 @@ def find_above_average(students, average):
     above_average = []
 
     for student in students:
-        if student["score"] > average:
+        if student[1] > average:
             above_average.append(student)
 
     return above_average
@@ -83,8 +83,8 @@ def find_above_average(students, average):
 def generate_report(students):
     # Validate all scores first
     for student in students:
-        if not validate_score(student["score"]):
-            print("Invalid score for", student["name"])
+        if not validate_score(student[1]):
+            print("Invalid score for", student[0])
             return
 
     # Calculate class results
@@ -93,23 +93,25 @@ def generate_report(students):
     print("===== STUDENT PERFORMANCE REPORT =====")
 
     for student in students:
-        grade = calculate_grade(student["score"])
+        name = student[0]
+        score = student[1]
+        grade = calculate_grade(score)
 
-        if student["score"] >= 50:
+        if score >= 50:
             status = "Pass"
         else:
             status = "Fail"
 
         print(
-            student["name"],
-            "| Score:", student["score"],
+            name,
+            "| Score:", score,
             "| Grade:", grade,
             "| Status:", status
         )
 
     print("--------------------------------------")
     print("Class Average:", round(average, 2))
-    
+
     if len(students) > 0:
         print("Highest Score:", find_highest_score(students))
         print("Lowest Score:", find_lowest_score(students))
@@ -122,15 +124,15 @@ def generate_report(students):
     above_average = find_above_average(students, average)
 
     for student in above_average:
-        print(student["name"], "-", student["score"])
+        print(student[0], "-", student[1])
 
 
-# Example student data
+# Student data: each tuple contains (name, score)
 students = [
-    {"name": "Sara", "score": 85},
-    {"name": "Ahmed", "score": 42},
-    {"name": "Musa", "score": 93},
-    {"name": "Hana", "score": 67}
+    ("Sara", 85),
+    ("Ahmed", 42),
+    ("Musa", 93),
+    ("Hana", 67)
 ]
 
 generate_report(students)
